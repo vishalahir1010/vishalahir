@@ -1,263 +1,647 @@
 /* =========================================================
    GLOBAL DESIGN SYSTEM
-   All colors are defined as CSS variables so the entire site
-   reacts instantly to the [data-theme] attribute on <html>.
+   Portfolio-wide variables, reset, layout and utilities
+========================================================= */
+
+
+/* =========================================================
+   LIGHT THEME
 ========================================================= */
 
 :root {
-  /* ---------- LIGHT THEME (default) ---------- */
+  /* ---------- Colors ---------- */
+
   --bg-primary: #F8FAFC;
   --bg-secondary: #FFFFFF;
   --card-bg: #FFFFFF;
+
   --text-primary: #0F172A;
-  --text-secondary: #56657A; /* darkened slightly from #64748B for stronger WCAG AA contrast */
+  --text-secondary: #56657A;
+
   --accent: #2563EB;
   --accent-hover: #1D4ED8;
+
   --border-color: #E2E8F0;
+
   --glow-color: rgba(37, 99, 235, 0.18);
   --shadow-color: rgba(15, 23, 42, 0.08);
+
   --navbar-bg: rgba(248, 250, 252, 0.75);
+
   --success: #16A34A;
   --error: #DC2626;
 
-  /* Typography */
+
+  /* ---------- Typography ---------- */
+
   --font-heading: 'Poppins', sans-serif;
   --font-body: 'Inter', sans-serif;
 
-  /* Layout */
+
+  /* ---------- Layout ---------- */
+
   --max-width: 1200px;
+
   --section-padding: 6rem 1.5rem;
+
+
+  /* ---------- Border Radius ---------- */
+
   --radius-sm: 8px;
   --radius-md: 14px;
   --radius-lg: 22px;
+
+
+  /* ---------- Animation ---------- */
+
   --transition: all 0.3s ease;
 }
+
+
+/* =========================================================
+   DARK THEME
+========================================================= */
 
 [data-theme='dark'] {
   --bg-primary: #020617;
   --bg-secondary: #0F172A;
   --card-bg: #111827;
+
   --text-primary: #F8FAFC;
   --text-secondary: #94A3B8;
+
   --accent: #38BDF8;
   --accent-hover: #0EA5E9;
+
   --border-color: #1E293B;
+
   --glow-color: rgba(56, 189, 248, 0.18);
   --shadow-color: rgba(0, 0, 0, 0.45);
+
   --navbar-bg: rgba(2, 6, 23, 0.75);
+
   --success: #22C55E;
   --error: #F87171;
 }
 
+
 /* =========================================================
-   RESET & BASE
+   RESET
 ========================================================= */
-* {
+
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 80px; /* accounts for sticky navbar when jumping to anchors */
-}
 
-body {
-  font-family: var(--font-body);
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
-  transition: background-color 0.4s ease, color 0.4s ease;
-  line-height: 1.6;
+/* =========================================================
+   HTML
+========================================================= */
+
+html {
+  width: 100%;
+  max-width: 100%;
+
+  scroll-behavior: smooth;
+
+  scroll-padding-top: 80px;
+
+  /*
+    Prevent horizontal overflow caused by
+    mobile drawers, animations or oversized elements.
+  */
   overflow-x: hidden;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-heading);
+
+/* =========================================================
+   BODY
+========================================================= */
+
+body {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+
+  margin: 0;
+  padding: 0;
+
+  font-family: var(--font-body);
+
+  background-color: var(--bg-primary);
+
   color: var(--text-primary);
-  line-height: 1.25;
+
+  line-height: 1.6;
+
+  overflow-x: hidden;
+
+  transition:
+    background-color 0.4s ease,
+    color 0.4s ease;
 }
+
+
+/* =========================================================
+   ROOT
+========================================================= */
+
+#root {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+
+  overflow-x: clip;
+}
+
+
+/* =========================================================
+   MOBILE MENU BODY LOCK
+========================================================= */
+
+body.menu-open {
+  overflow: hidden;
+}
+
+
+/* =========================================================
+   HEADINGS
+========================================================= */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+
+  color: var(--text-primary);
+
+  line-height: 1.25;
+
+  max-width: 100%;
+}
+
+
+/* =========================================================
+   LINKS
+========================================================= */
 
 a {
-  text-decoration: none;
   color: inherit;
+
+  text-decoration: none;
 }
 
-ul {
+
+/* =========================================================
+   LISTS
+========================================================= */
+
+ul,
+ol {
   list-style: none;
 }
 
+
+/* =========================================================
+   IMAGES
+========================================================= */
+
 img {
-  max-width: 100%;
   display: block;
+
+  max-width: 100%;
+
+  height: auto;
 }
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
 
 button {
   font-family: var(--font-body);
+
   cursor: pointer;
+
   border: none;
+
   outline: none;
+
   background: none;
 }
 
-/* Better keyboard-navigation visibility for accessibility */
+
+/* =========================================================
+   FORM ELEMENTS
+========================================================= */
+
+input,
+textarea,
+select {
+  max-width: 100%;
+
+  font-family: inherit;
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+========================================================= */
+
 a:focus-visible,
 button:focus-visible,
 input:focus-visible,
-textarea:focus-visible {
+textarea:focus-visible,
+select:focus-visible {
   outline: 2px solid var(--accent);
+
   outline-offset: 3px;
+
   border-radius: 4px;
 }
 
+
 /* =========================================================
-   SHARED LAYOUT UTILITIES
+   SHARED CONTAINER
 ========================================================= */
+
 .container {
+  width: 100%;
   max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 0 1.5rem;
+
+  margin-left: auto;
+  margin-right: auto;
+
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+
+  box-sizing: border-box;
 }
+
+
+/* =========================================================
+   SECTION
+========================================================= */
 
 .section {
+  width: 100%;
+  max-width: 100%;
+
   padding: var(--section-padding);
+
+  box-sizing: border-box;
 }
 
+
+/* =========================================================
+   SECTION HEADER
+========================================================= */
+
 .section-header {
-  text-align: center;
+  width: 100%;
   max-width: 640px;
+
   margin: 0 auto 3.5rem;
+
+  text-align: center;
 }
+
+
+/* =========================================================
+   SECTION TAG
+========================================================= */
 
 .section-tag {
   display: inline-block;
-  color: var(--accent);
-  font-weight: 600;
-  font-size: 0.85rem;
-  letter-spacing: 2px;
-  text-transform: uppercase;
+
   margin-bottom: 0.75rem;
+
+  color: var(--accent);
+
+  font-size: 0.85rem;
+
+  font-weight: 600;
+
+  letter-spacing: 2px;
+
+  text-transform: uppercase;
 }
+
+
+/* =========================================================
+   SECTION TITLE
+========================================================= */
 
 .section-title {
-  font-size: clamp(1.8rem, 4vw, 2.5rem);
-  font-weight: 700;
+  max-width: 100%;
+
   margin-bottom: 0.75rem;
+
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+
+  font-weight: 700;
 }
 
+
+/* =========================================================
+   SECTION SUBTITLE
+========================================================= */
+
 .section-subtitle {
+  max-width: 100%;
+
   color: var(--text-secondary);
+
   font-size: 1.05rem;
 }
 
-/* Glassmorphism card - subtle, used across sections */
+
+/* =========================================================
+   GLASS CARD
+========================================================= */
+
 .glass-card {
+  width: 100%;
+  max-width: 100%;
+
   background: var(--card-bg);
+
   border: 1px solid var(--border-color);
+
   border-radius: var(--radius-md);
+
   backdrop-filter: blur(10px);
+
   -webkit-backdrop-filter: blur(10px);
+
   transition: var(--transition);
 }
 
-/* Modern button styles */
+
+/* =========================================================
+   BUTTON SYSTEM
+========================================================= */
+
 .btn {
   display: inline-flex;
+
   align-items: center;
   justify-content: center;
+
   gap: 0.5rem;
+
   padding: 0.85rem 1.8rem;
+
   border-radius: var(--radius-sm);
-  font-weight: 600;
+
   font-size: 0.95rem;
-  transition: var(--transition);
+
+  font-weight: 600;
+
+  line-height: 1.2;
+
   white-space: nowrap;
+
+  box-sizing: border-box;
+
+  transition: var(--transition);
 }
+
+
+/* =========================================================
+   PRIMARY BUTTON
+========================================================= */
 
 .btn-primary {
   background: var(--accent);
+
   color: #ffffff;
-  box-shadow: 0 8px 24px var(--glow-color);
+
+  box-shadow:
+    0 8px 24px var(--glow-color);
 }
+
 
 .btn-primary:hover {
   background: var(--accent-hover);
+
   transform: translateY(-3px);
-  box-shadow: 0 12px 28px var(--glow-color);
+
+  box-shadow:
+    0 12px 28px var(--glow-color);
 }
+
+
+/* =========================================================
+   OUTLINE BUTTON
+========================================================= */
 
 .btn-outline {
   background: transparent;
+
   color: var(--text-primary);
+
   border: 1.5px solid var(--border-color);
 }
 
+
 .btn-outline:hover {
   border-color: var(--accent);
+
   color: var(--accent);
+
   transform: translateY(-3px);
 }
 
+
 /* =========================================================
-   ANIMATIONS (kept subtle, used sparingly)
+   GENERIC RESPONSIVE MEDIA
 ========================================================= */
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(24px); }
-  to { opacity: 1; transform: translateY(0); }
+
+video,
+iframe,
+canvas,
+svg {
+  max-width: 100%;
 }
+
+
+/* =========================================================
+   TEXT / CONTENT OVERFLOW PROTECTION
+========================================================= */
+
+p,
+span,
+li,
+a,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+
+/* =========================================================
+   ANIMATIONS
+========================================================= */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+
+    transform: translateY(24px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0);
+  }
+}
+
 
 @keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-12px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-12px);
+  }
 }
+
 
 @keyframes pulseGlow {
-  0%, 100% { opacity: 0.55; }
-  50% { opacity: 1; }
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+
+  50% {
+    opacity: 1;
+  }
 }
+
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
-/* Reveal-on-scroll utility, toggled via IntersectionObserver in components */
+
+/* =========================================================
+   REVEAL ON SCROLL
+========================================================= */
+
 .reveal {
   opacity: 0;
+
   transform: translateY(24px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
+
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s ease;
 }
+
 
 .reveal.visible {
   opacity: 1;
+
   transform: translateY(0);
 }
 
+
 /* =========================================================
-   RESPONSIVE BREAKPOINTS (reference)
-   Mobile:  <= 480px
-   Tablet:  481px - 768px
-   Laptop:  769px - 1199px
-   Desktop: >= 1200px
+   TABLET
+   <= 768px
 ========================================================= */
 
 @media (max-width: 768px) {
+
   :root {
     --section-padding: 4rem 1.25rem;
   }
-}
 
-@media (max-width: 480px) {
-  :root {
-    --section-padding: 3rem 1rem;
+  .container {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
   }
 }
 
-/* Respect users who prefer reduced motion */
+
+/* =========================================================
+   MOBILE
+   <= 480px
+========================================================= */
+
+@media (max-width: 480px) {
+
+  :root {
+    --section-padding: 3rem 1rem;
+  }
+
+  html {
+    scroll-padding-top: 72px;
+  }
+
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .section {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   <= 360px
+========================================================= */
+
+@media (max-width: 360px) {
+
+  :root {
+    --section-padding: 2.75rem 0.85rem;
+  }
+
+  .container {
+    padding-left: 0.85rem;
+    padding-right: 0.85rem;
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
+
     animation-iteration-count: 1 !important;
+
     transition-duration: 0.01ms !important;
+
     scroll-behavior: auto !important;
   }
 }

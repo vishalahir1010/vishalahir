@@ -16,7 +16,7 @@ function Footer() {
 
         <div className="footer-socials">
           <a
-            href="https://github.com/your-username"
+            href="https://github.com/vishalahir1010"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="GitHub"
@@ -24,14 +24,14 @@ function Footer() {
             <FiGithub />
           </a>
           <a
-            href="https://linkedin.com/in/your-username"
+            href="https://www.linkedin.com/in/kandoriya-vishal"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="LinkedIn"
           >
             <FiLinkedin />
           </a>
-          <a href="mailto:your-email@example.com" aria-label="Email">
+          <a href="mailto:ahirv2641@gmail.com" aria-label="Email">
             <FiMail />
           </a>
         </div>

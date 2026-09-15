@@ -14,20 +14,29 @@ const navLinks = [
 
 function Navbar() {
   const { theme, toggleTheme } = useTheme();
+
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
 
-  // Add a subtle shadow/blur once the user scrolls down
+  /* Navbar shadow on scroll */
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
-  // Highlight the nav link matching the section currently in view
+  /* Active navigation section */
   useEffect(() => {
-    const sections = navLinks.map((link) => document.getElementById(link.href.slice(1)));
+    const sections = navLinks
+      .map((link) => document.getElementById(link.href.slice(1)))
+      .filter(Boolean);
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -37,70 +46,106 @@ function Navbar() {
           }
         });
       },
-      { rootMargin: '-40% 0px -50% 0px' } // triggers when section is roughly centered
+      {
+        rootMargin: '-35% 0px -55% 0px',
+      }
     );
 
-    sections.forEach((section) => section && observer.observe(section));
+    sections.forEach((section) => observer.observe(section));
+
     return () => observer.disconnect();
   }, []);
 
-  // Lock body scroll while the mobile menu is open, so the page
-  // behind the menu can't be scrolled on touch devices.
+  /* Lock page scroll when mobile menu is open */
   useEffect(() => {
-    document.body.style.overflow = menuOpen ? 'hidden' : '';
+    if (menuOpen) {
+      document.body.classList.add('menu-open');
+    } else {
+      document.body.classList.remove('menu-open');
+    }
+
     return () => {
-      document.body.style.overflow = '';
+      document.body.classList.remove('menu-open');
     };
   }, [menuOpen]);
 
-  // Close the mobile menu whenever a link is clicked
-  const handleLinkClick = () => setMenuOpen(false);
+  /* Close menu */
+  const handleLinkClick = () => {
+    setMenuOpen(false);
+  };
 
   return (
     <header className={`navbar ${scrolled ? 'navbar-scrolled' : ''}`}>
-      <nav className="navbar-inner container" aria-label="Primary navigation">
-        <a href="#home" className="navbar-logo" onClick={handleLinkClick}>
+      <nav
+        className="navbar-inner container"
+        aria-label="Primary navigation"
+      >
+        {/* Logo */}
+        <a
+          href="#home"
+          className="navbar-logo"
+          onClick={handleLinkClick}
+        >
           VISHAL<span>.DEV</span>
         </a>
 
+        {/* Navigation */}
         <ul className={`navbar-links ${menuOpen ? 'open' : ''}`}>
-          {navLinks.map((link) => (
-            <li key={link.href}>
-              <a
-                href={link.href}
-                onClick={handleLinkClick}
-                className={activeSection === link.href.slice(1) ? 'active' : ''}
-                aria-current={activeSection === link.href.slice(1) ? 'page' : undefined}
-              >
-                {link.label}
-              </a>
-            </li>
-          ))}
+          {navLinks.map((link) => {
+            const isActive = activeSection === link.href.slice(1);
 
-          {/* Shown inside the mobile menu for smaller screens */}
+            return (
+              <li key={link.href}>
+                <a
+                  href={link.href}
+                  onClick={handleLinkClick}
+                  className={isActive ? 'active' : ''}
+                >
+                  {link.label}
+                </a>
+              </li>
+            );
+          })}
+
+          {/* Mobile Hire Me */}
           <li className="navbar-hire-mobile">
-            <a href="#contact" onClick={handleLinkClick} className="btn btn-primary">
+            <a
+              href="#contact"
+              className="btn btn-primary"
+              onClick={handleLinkClick}
+            >
               Hire Me
             </a>
           </li>
         </ul>
 
+        {/* Actions */}
         <div className="navbar-actions">
+          {/* Theme */}
           <button
+            type="button"
             className="theme-toggle"
             onClick={toggleTheme}
-            aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+            aria-label={`Switch to ${
+              theme === 'light' ? 'dark' : 'light'
+            } mode`}
           >
             {theme === 'light' ? <FiMoon /> : <FiSun />}
           </button>
 
-          <a href="#contact" className="btn btn-primary navbar-hire-desktop">
+          {/* Desktop Hire Me */}
+          <a
+            href="#contact"
+            className="btn btn-primary navbar-hire-desktop"
+          >
             Hire Me
           </a>
 
+          {/* Mobile Menu Button */}
           <button
+            type="button"
             className="menu-toggle"
-            onClick={() => setMenuOpen((prev) => !prev)}
+            onClick={() => setMenuOpen(!menuOpen)}
             aria-label={menuOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={menuOpen}
           >

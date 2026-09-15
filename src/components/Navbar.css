@@ -1,52 +1,104 @@
+/* =========================================================
+   NAVBAR
+========================================================= */
+
 .navbar {
   position: sticky;
   top: 0;
   z-index: 1000;
+
   width: 100%;
+
   background: var(--navbar-bg);
+
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
+
   border-bottom: 1px solid transparent;
-  transition: var(--transition);
+
+  transition: all 0.3s ease;
 }
 
 .navbar-scrolled {
-  border-bottom: 1px solid var(--border-color);
+  border-bottom-color: var(--border-color);
   box-shadow: 0 4px 24px var(--shadow-color);
 }
 
+
+/* =========================================================
+   NAVBAR INNER
+========================================================= */
+
 .navbar-inner {
+  position: relative;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
+
   height: 72px;
+  width: 100%;
 }
 
+
+/* =========================================================
+   LOGO
+========================================================= */
+
 .navbar-logo {
+  flex-shrink: 0;
+
   font-family: var(--font-heading);
   font-weight: 800;
   font-size: 1.3rem;
-  color: var(--text-primary);
+
   letter-spacing: 0.5px;
+  white-space: nowrap;
+
+  color: var(--text-primary);
 }
 
 .navbar-logo span {
   color: var(--accent);
 }
 
+
+/* =========================================================
+   DESKTOP NAVIGATION
+========================================================= */
+
 .navbar-links {
   display: flex;
   align-items: center;
+
   gap: 2.2rem;
+
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+}
+
+.navbar-links li {
+  margin: 0;
+  padding: 0;
 }
 
 .navbar-links a {
   position: relative;
+
+  display: block;
+
+  padding: 0.25rem 0;
+
   font-weight: 500;
   font-size: 0.95rem;
+
   color: var(--text-secondary);
-  transition: var(--transition);
-  padding: 0.25rem 0;
+
+  white-space: nowrap;
+
+  transition: all 0.3s ease;
 }
 
 .navbar-links a:hover {
@@ -59,105 +111,286 @@
 
 .navbar-links a.active::after {
   content: '';
+
   position: absolute;
+
   left: 0;
   bottom: -6px;
+
   width: 100%;
   height: 2px;
+
   background: var(--accent);
-  border-radius: 2px;
+
+  border-radius: 10px;
 }
+
+
+/* =========================================================
+   NAVBAR ACTIONS
+========================================================= */
 
 .navbar-actions {
   display: flex;
   align-items: center;
+
   gap: 1rem;
+
+  flex-shrink: 0;
 }
+
+
+/* =========================================================
+   THEME BUTTON
+========================================================= */
 
 .theme-toggle {
   display: flex;
   align-items: center;
   justify-content: center;
+
   width: 40px;
   height: 40px;
-  border-radius: 50%;
+
+  flex-shrink: 0;
+
   border: 1px solid var(--border-color);
+  border-radius: 50%;
+
+  background: transparent;
+
   color: var(--text-primary);
+
   font-size: 1.1rem;
-  transition: var(--transition);
+
+  transition: all 0.3s ease;
 }
 
 .theme-toggle:hover {
-  border-color: var(--accent);
   color: var(--accent);
+  border-color: var(--accent);
+
   transform: rotate(20deg);
+}
+
+
+/* =========================================================
+   HIRE BUTTON
+========================================================= */
+
+.navbar-hire-desktop {
+  display: inline-flex;
 }
 
 .navbar-hire-mobile {
   display: none;
 }
 
-.menu-toggle {
-  display: none;
-  font-size: 1.5rem;
-  color: var(--text-primary);
-}
 
 /* =========================================================
-   RESPONSIVE: TABLET & MOBILE
+   MENU BUTTON
 ========================================================= */
+
+.menu-toggle {
+  display: none;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 40px;
+  height: 40px;
+
+  padding: 0;
+
+  color: var(--text-primary);
+
+  font-size: 1.5rem;
+
+  background: transparent;
+}
+
+
+/* =========================================================
+   MOBILE / TABLET
+========================================================= */
+
 @media (max-width: 900px) {
-  .navbar-hire-desktop {
-    display: none;
+
+  /* Desktop Hire Me completely hide */
+  .navbar-actions .navbar-hire-desktop {
+    display: none !important;
   }
 
+  /* Show hamburger */
   .menu-toggle {
     display: flex;
   }
 
+  /* =======================================================
+     SIDE DRAWER
+  ======================================================= */
+
   .navbar-links {
     position: fixed;
+
     top: 72px;
     right: 0;
-    height: calc(100vh - 72px);
-    width: min(75vw, 320px);
-    background: var(--bg-secondary);
-    border-left: 1px solid var(--border-color);
+
+    width: 280px;
+    height: calc(100dvh - 72px);
+
+    display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
-    padding: 2rem 1.75rem;
+    align-items: stretch;
+
+    gap: 0;
+
+    padding: 1.25rem 1.5rem;
+    margin: 0;
+
+    background: var(--bg-secondary);
+
+    border-left: 1px solid var(--border-color);
+
+    box-shadow: -8px 0 30px var(--shadow-color);
+
+    overflow-y: auto;
+
+    /*
+      IMPORTANT:
+      Completely move drawer outside the viewport
+    */
     transform: translateX(100%);
+
     transition: transform 0.35s ease;
+
+    z-index: 2000;
+
+    visibility: hidden;
+
+    pointer-events: none;
   }
 
+  /* Open drawer */
   .navbar-links.open {
     transform: translateX(0);
+
+    visibility: visible;
+
+    pointer-events: auto;
   }
+
+
+  /* =======================================================
+     MOBILE LINKS
+  ======================================================= */
 
   .navbar-links li {
     width: 100%;
   }
 
   .navbar-links a {
-    display: block;
+    display: flex;
+    align-items: center;
+
     width: 100%;
-    padding: 0.85rem 0;
-    font-size: 1.05rem;
+
+    padding: 1rem 0;
+
+    font-size: 1rem;
+
+    color: var(--text-secondary);
+
     border-bottom: 1px solid var(--border-color);
   }
 
+  .navbar-links a:hover {
+    color: var(--accent);
+  }
+
+  .navbar-links a.active {
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  /* Hide desktop underline on mobile */
   .navbar-links a.active::after {
     display: none;
   }
 
+
+  /* =======================================================
+     MOBILE HIRE BUTTON
+  ======================================================= */
+
   .navbar-hire-mobile {
     display: block;
+
     width: 100%;
-    margin-top: 1rem;
+
+    margin-top: 1.25rem;
   }
 
   .navbar-hire-mobile .btn {
+    display: flex;
+
     width: 100%;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+  .navbar-inner {
+    height: 68px;
+  }
+
+  .navbar-logo {
+    font-size: 1.15rem;
+  }
+
+  .navbar-actions {
+    gap: 0.6rem;
+  }
+
+  .theme-toggle,
+  .menu-toggle {
+    width: 38px;
+    height: 38px;
+  }
+
+  /* Drawer starts after 68px navbar */
+  .navbar-links {
+    top: 68px;
+
+    height: calc(100dvh - 68px);
+
+    width: min(78vw, 300px);
+
+    padding: 1.25rem;
+  }
+}
+
+
+/* =========================================================
+   SMALL PHONES
+========================================================= */
+
+@media (max-width: 360px) {
+
+  .navbar-links {
+    width: 82vw;
+  }
+
+  .navbar-actions {
+    gap: 0.4rem;
+  }
+
+  .navbar-logo {
+    font-size: 1.05rem;
   }
 }
