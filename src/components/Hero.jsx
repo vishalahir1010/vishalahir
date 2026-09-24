@@ -45,7 +45,7 @@ function Hero() {
           </div>
 
           {/* Resume download link — place your PDF at public/resume.pdf */}
-          <a href="public\resume.pdf"  className="hero-resume-link" target='_blank'>
+          <a href="resume.pdf"  className="hero-resume-link" target='_blank'>
             <FiDownload /> Download Resume
           </a>
         </motion.div>
