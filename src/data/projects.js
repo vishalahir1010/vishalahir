@@ -30,7 +30,7 @@ export const projects = [
     description:
       'A premium perfume e-commerce storefront with product browsing, cart, search and a dark/light theme toggle — built with a full MERN stack backend for products, cart and order handling.',
     image: luxeScentImg,
-    tech: ['React', 'React', 'JavaScript', 'CSS3'],
+    tech: ['React', 'JavaScript', 'CSS3'],
     features: ['Product Catalog', 'Shopping Cart', 'Search', 'Dark/Light Theme', 'Responsive Design'],
     liveLink: 'https://luxesent.netlify.app',
     githubLink: 'https://github.com/vishalahir1010/Perfumes-',
